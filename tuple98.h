@@ -37,7 +37,6 @@ namespace tuple98 {
     #define TUPLE(...) TYPE_T(::tuple98::tuple<__VA_ARGS__>)
     #define TEMPLATE_TUPLE(...) TYPENAME_T(::tuple98::tuple<__VA_ARGS__>)
 
-    // expansion for 
     template <>
     struct tuple<> {
         typedef nil type;
@@ -151,6 +150,7 @@ namespace tuple98 {
         };
     }
 
+    // actually useful tuple constructor
     TUPLE() make_tuple() {
         return nil();
     }
@@ -200,6 +200,7 @@ namespace tuple98 {
         return TEMPLATE_TUPLE(T1, T2, T3, T4, T5, T6, T7, T8, T9)(t1, make_tuple(t2, t3, t4, t5, t6, t7, t8, t9));
     }
 
+    // tuple accessor by type
     template <typename T, typename Tuple>
     T& get(Tuple& t) {
         return detail::get<Tuple, T>::get_value(t);
@@ -210,6 +211,7 @@ namespace tuple98 {
         return detail::get<Tuple, T>::get_value(t);
     }
 
+    // tuple accessor by index
     template <size_t I, typename Tuple>
     TYPENAME_T(detail::nth<Tuple, I>)& get(Tuple& t) {
         return detail::nth<Tuple, I>::nth_value(t);
