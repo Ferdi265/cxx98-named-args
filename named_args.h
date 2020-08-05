@@ -269,646 +269,306 @@ namespace named_args {
         struct impl_return_check<I, K, A, true> {
             USING(type, TYPENAME_T(impl_return<I>));
         };
+
+        // base class for named function type
+        // implements forwarding to implementation
+        template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void>
+        struct function_apply_base;
+
+        template <typename I, I impl>
+        struct function_apply_base<I, impl> {
+        protected:
+            USING(kinds_t, TUPLE());
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                (void)args;
+
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl();
+            }
+        };
+
+        template <typename I, I impl, typename K1>
+        struct function_apply_base<I, impl, K1> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2>
+        struct function_apply_base<I, impl, K1, K2> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3>
+        struct function_apply_base<I, impl, K1, K2, K3> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
+        struct function_apply_base<I, impl, K1, K2, K3, K4> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5>
+        struct function_apply_base<I, impl, K1, K2, K3, K4, K5> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6>
+        struct function_apply_base<I, impl, K1, K2, K3, K4, K5, K6> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7>
+        struct function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8>
+        struct function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K8, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8, typename K9>
+        struct function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9> {
+        protected:
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9));
+
+            template <typename args_t>
+            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+                USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
+                USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
+
+                rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
+                return impl(
+                    detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K8, args_t, rest_kinds_t>::select(args, rest).value,
+                    detail::select_single<K9, args_t, rest_kinds_t>::select(args, rest).value
+                );
+            }
+        };
+
+        // base class for named function type
+        // implements call operator overloads
+        template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void,
+            bool all_defaultable = detail::missing_req_args<TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10), TUPLE()>::empty
+        >
+        struct function_base;
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8, typename K9>
+        struct function_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, false>
+            : public function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void>
+        {
+        private:
+            USING(super, function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void>);
+            USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9));
+
+        public:
+            template <typename A1>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
+                return super::apply_impl(tuple98::make_tuple(a1));
+            }
+
+            template <typename A1, typename A2>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2));
+            }
+
+            template <typename A1, typename A2, typename A3>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4, typename A5>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8));
+            }
+
+            template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
+            __attribute__((always_inline))
+            TYPENAME_T(impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8, A9)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) const {
+                return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8, a9));
+            }
+        };
+
+        template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8, typename K9>
+        struct function_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, true>
+            : public function_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, false>
+        {
+        private:
+            USING(super, function_apply_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void>);
+            USING(kinds_t, TUPLE());
+
+        public:
+            __attribute__((always_inline))
+            TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+                return super::apply_impl(tuple98::make_tuple());
+            }
+        };
     }
 
     // named argument function type
-    template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void,
-        bool all_defaultable = detail::missing_req_args<TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10), TUPLE()>::empty
-    >
-    struct function;
-
-    template <typename I, I impl>
-    struct function<I, impl, void, void, void, void, void, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TUPLE());
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            (void)args;
-
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl();
-        }
-    };
-
-    template <typename I, I impl>
-    struct function<I, impl, void, void, void, void, void, void, void, void, void, void, true>
-        : public function<I, impl, void, void, void, void, void, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, void, void, void, void, void, void, void, void, void, void, false>);
-        USING(kinds_t, TUPLE());
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1>
-    struct function<I, impl, K1, void, void, void, void, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-    };
-
-    template <typename I, I impl, typename K1>
-    struct function<I, impl, K1, void, void, void, void, void, void, void, void, void, true>
-        : public function<I, impl, K1, void, void, void, void, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, void, void, void, void, void, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2>
-    struct function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2>
-    struct function<I, impl, K1, K2, void, void, void, void, void, void, void, void, true>
-        : public function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3>
-    struct function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3>
-    struct function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, true>
-        : public function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
-    struct function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
-    struct function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, true>
-        : public function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5>
-    struct function<I, impl, K1, K2, K3, K4, K5, void, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5>
-    struct function<I, impl, K1, K2, K3, K4, K5, void, void, void, void, void, true>
-        : public function<I, impl, K1, K2, K3, K4, K5, void, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, K5, void, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, void, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, void, void, void, void, true>
-        : public function<I, impl, K1, K2, K3, K4, K5, K6, void, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, K5, K6, void, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, void, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, void, void, void, true>
-        : public function<I, impl, K1, K2, K3, K4, K5, K6, K7, void, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, K5, K6, K7, void, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, void, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K8, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, void, void, true>
-        : public function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, void, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, void, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8, typename K9>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, false> {
-    protected:
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9));
-
-        template <typename args_t>
-        TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
-            USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
-            USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
-
-            rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
-            return impl(
-                detail::select_single<K1, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K2, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K3, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K4, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K5, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K6, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K7, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K8, args_t, rest_kinds_t>::select(args, rest).value,
-                detail::select_single<K9, args_t, rest_kinds_t>::select(args, rest).value
-            );
-        }
-
-    public:
-        template <typename A1>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
-            return apply_impl(tuple98::make_tuple(a1));
-        }
-
-        template <typename A1, typename A2>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
-            return apply_impl(tuple98::make_tuple(a1, a2));
-        }
-
-        template <typename A1, typename A2, typename A3>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8));
-        }
-
-        template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8, A9)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) const {
-            return apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8, a9));
-        }
-    };
-
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4, typename K5, typename K6, typename K7, typename K8, typename K9>
-    struct function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, true>
-        : public function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, false>
-    {
-    private:
-        USING(super, function<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9, void, false>);
-        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9));
-
-    public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return super::apply_impl(tuple98::make_tuple());
-        }
-    };
+    template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void>
+    struct function : public detail::function_base<I, impl, K1, K2, K3, K4, K5, K6, K7, K8, K9> {};
 }
