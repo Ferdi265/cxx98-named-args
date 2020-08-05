@@ -185,60 +185,6 @@ namespace named_args {
                 return arg<TYPENAME_T(K), K>(tuple98::get<arg_index>(r));
             }
         };
-
-        // get the type the named argument function implementation returns
-        template <typename I>
-        struct impl_return;
-
-        template <typename R>
-        struct impl_return<R(*)()> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1>
-        struct impl_return<R(*)(A1)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2>
-        struct impl_return<R(*)(A1, A2)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3>
-        struct impl_return<R(*)(A1, A2, A3)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4>
-        struct impl_return<R(*)(A1, A2, A3, A4)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5>
-        struct impl_return<R(*)(A1, A2, A3, A4, A5)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
-        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
-        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7, A8)> {
-            USING(type, R);
-        };
-
-        template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
-        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
-            USING(type, R);
-        };
     }
 
     // error reporting type
@@ -261,13 +207,13 @@ namespace named_args {
             const static named_args::error<missing_req_args, duplicate_args, invalid_args, valid> error;
         };
 
-        // check args and then call impl_return
+        // check args and then call result_of
         template <typename I, typename K, typename A, bool = check_args<K, A>::valid>
-        struct impl_return_check;
+        struct result_of_check;
 
         template <typename I, typename K, typename A>
-        struct impl_return_check<I, K, A, true> {
-            USING(type, TYPENAME_T(impl_return<I>));
+        struct result_of_check<I, K, A, true> {
+            USING(type, TYPENAME_T(type_traits::result_of<I>));
         };
 
         // base class for named function type
@@ -281,7 +227,7 @@ namespace named_args {
             USING(kinds_t, TUPLE());
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 (void)args;
 
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
@@ -298,7 +244,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -315,7 +261,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -333,7 +279,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -352,7 +298,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -372,7 +318,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -393,7 +339,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -415,7 +361,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -438,7 +384,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -462,7 +408,7 @@ namespace named_args {
             USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9));
 
             template <typename args_t>
-            TYPENAME_T(detail::impl_return<I>) apply_impl(args_t args) const {
+            TYPENAME_T(type_traits::result_of<I>) apply_impl(args_t args) const {
                 USING(rest_kinds_t, TYPENAME_T(detail::missing_non_req_args<kinds_t, args_t>));
                 USING(rest_values_t, TYPENAME_T(tuple98_traits::types<rest_kinds_t>));
 
@@ -499,55 +445,55 @@ namespace named_args {
     public:
         template <typename A1>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
             return super::apply_impl(tuple98::make_tuple(a1));
         }
 
         template <typename A1, typename A2>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2)>) operator()(A1 a1, A2 a2) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2));
         }
 
         template <typename A1, typename A2, typename A3>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3)>) operator()(A1 a1, A2 a2, A3 a3) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3));
         }
 
         template <typename A1, typename A2, typename A3, typename A4>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
         }
 
         template <typename A1, typename A2, typename A3, typename A4, typename A5>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5));
         }
 
         template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6));
         }
 
         template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7));
         }
 
         template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8));
         }
 
         template <typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8, A9)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4, A5, A6, A7, A8, A9)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4, A5 a5, A6 a6, A7 a7, A8 a8, A9 a9) const {
             return super::apply_impl(tuple98::make_tuple(a1, a2, a3, a4, a5, a6, a7, a8, a9));
         }
     };
@@ -562,7 +508,7 @@ namespace named_args {
 
     public:
         __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+        TYPENAME_T(detail::result_of_check<I, kinds_t, TUPLE()>) operator()() const {
             return super::apply_impl(tuple98::make_tuple());
         }
     };

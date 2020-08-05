@@ -38,4 +38,68 @@ namespace type_traits {
     struct conditional<false, T, U> {
         USING(type, U);
     };
+
+    // get the type that is returned as a result of calling a function
+    template <typename T>
+    struct result_of;
+
+    template <typename T>
+    struct result_of<T*> {
+        USING(type, TYPENAME_T(result_of<T>));
+    };
+
+    template <typename T>
+    struct result_of<T&> {
+        USING(type, TYPENAME_T(result_of<T>));
+    };
+
+    template <typename R>
+    struct result_of<R()> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1>
+    struct result_of<R(A1)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2>
+    struct result_of<R(A1, A2)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3>
+    struct result_of<R(A1, A2, A3)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4>
+    struct result_of<R(A1, A2, A3, A4)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5>
+    struct result_of<R(A1, A2, A3, A4, A5)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
+    struct result_of<R(A1, A2, A3, A4, A5, A6)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
+    struct result_of<R(A1, A2, A3, A4, A5, A6, A7)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
+    struct result_of<R(A1, A2, A3, A4, A5, A6, A7, A8)> {
+        USING(type, R);
+    };
+
+    template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
+    struct result_of<R(A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
+        USING(type, R);
+    };
 }
