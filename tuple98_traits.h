@@ -102,22 +102,82 @@ namespace tuple98_traits {
     template <template <typename U> class M>
     struct map_value<nil, M> {
         USING(type, nil);
-        const static type value;
-    };
 
-    template <template <typename U> class M>
-    const nil map_value<nil, M>::value = nil();
+        static type value() {
+            return nil();
+        }
+    };
 
     template <typename T, typename R, template <typename U> class M>
     struct map_value<cons<T, R>, M> {
         USING(type, TYPENAME_T(map_type<cons<T, R>, M>));
-        const static type value;
+
+        static type value() {
+            return tuple98::make_tuple(M<T>::value, map_value<R, M>::value());
+        }
+    };
+
+    // map a value fn mapper template M<U> over a tuple T
+    template <typename T, template <typename U> class M>
+    struct map_value_fn;
+
+    template <template <typename U> class M>
+    struct map_value_fn<nil, M> {
+        USING(type, nil);
+
+        static type value() {
+            return nil();
+        }
     };
 
     template <typename T, typename R, template <typename U> class M>
-    const TYPENAME_T(map_value<cons<T, R>, M>) map_value<cons<T, R>, M>::value = tuple98::make_tuple(M<T>::value, map_value<R, M>::value);
+    struct map_value_fn<cons<T, R>, M> {
+        USING(type, TYPENAME_T(map_type<cons<T, R>, M>));
 
-    // TODO: rest of tuple_traits
-    // TODO: check if the const members actually work (initialization order?)
-    // TODO: check if I actually want to do this
+        static type value() {
+            return tuple98::make_tuple(M<T>::value(), map_value<R, M>::value());
+        }
+    };
+
+    // template wrapper structs for use as a mapper
+    template <typename T>
+    struct type_of {
+        USING(type, TYPENAME_T(T));
+    };
+
+    template <typename T>
+    struct value_of {
+        static TYPENAME_T(T) value() {
+            return T::value;
+        }
+    };
+
+    template <typename T>
+    struct value_fn_of {
+        static TYPENAME_T(T) value() {
+            return T::value();
+        }
+    };
+
+    // get the types of a tuple T of type wrappers
+    template <typename T>
+    struct types {
+        USING(type, TYPENAME_T(map_type<T, type_of>));
+    };
+
+    // get the values of a tuple T of value wrappers
+    template <typename T>
+    struct values {
+        static TYPENAME_T(map_type<T, type_of>) value() {
+            return map_value<T, value_of>::value;
+        }
+    };
+
+    // get the values of a tuple T of value fn wrappers
+    template <typename T>
+    struct value_fns {
+        static TYPENAME_T(map_type<T, type_of>) value() {
+            return map_value<T, value_fn_of>::value();
+        }
+    };
 }
