@@ -1,19 +1,9 @@
 #pragma once
 
 #include <cstddef>
-
-// macros to reduce the amount of typename bloat
-#define TYPE_T(...) __VA_ARGS__::type
-#define TYPENAME_T(...) typename __VA_ARGS__::type
-#define USING(T, ...) typedef TYPENAME_T(::tuple98::ident<__VA_ARGS__>) T
+#include "type_traits.h"
 
 namespace tuple98 {
-    // identity type trait for bloat reduction macros
-    template <typename T>
-    struct ident {
-        typedef T type;
-    };
-
     // empty tuple
     struct nil {
         nil() {}

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include "tuple98.h"
 
 namespace tuple98_traits {
