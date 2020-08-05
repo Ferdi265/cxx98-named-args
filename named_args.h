@@ -190,52 +190,52 @@ namespace named_args {
         struct impl_return;
 
         template <typename R>
-        struct impl_return<R()> {
+        struct impl_return<R(*)()> {
             USING(type, R);
         };
 
         template <typename R, typename A1>
-        struct impl_return<R(A1)> {
+        struct impl_return<R(*)(A1)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2>
-        struct impl_return<R(A1, A2)> {
+        struct impl_return<R(*)(A1, A2)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3>
-        struct impl_return<R(A1, A2, A3)> {
+        struct impl_return<R(*)(A1, A2, A3)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4>
-        struct impl_return<R(A1, A2, A3, A4)> {
+        struct impl_return<R(*)(A1, A2, A3, A4)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5>
-        struct impl_return<R(A1, A2, A3, A4, A5)> {
+        struct impl_return<R(*)(A1, A2, A3, A4, A5)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6>
-        struct impl_return<R(A1, A2, A3, A4, A5, A6)> {
+        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7>
-        struct impl_return<R(A1, A2, A3, A4, A5, A6, A7)> {
+        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8>
-        struct impl_return<R(A1, A2, A3, A4, A5, A6, A7, A8)> {
+        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7, A8)> {
             USING(type, R);
         };
 
         template <typename R, typename A1, typename A2, typename A3, typename A4, typename A5, typename A6, typename A7, typename A8, typename A9>
-        struct impl_return<R(A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
+        struct impl_return<R(*)(A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
             USING(type, R);
         };
     }
