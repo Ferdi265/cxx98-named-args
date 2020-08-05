@@ -175,7 +175,7 @@ namespace tuple98_traits {
     template <typename T>
     struct values {
         static TYPENAME_T(map_type<T, type_of>) value() {
-            return map_value<T, value_of>::value;
+            return map_value<T, value_of>::value();
         }
     };
 
