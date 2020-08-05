@@ -66,7 +66,7 @@ void test_impl(std::string name, int age) {
     }
 }
 
-const named_args::function<void(*)(std::string, int), &test_impl, name_t, age_t> test;
+const named_args::function<void(&)(std::string, int), test_impl, name_t, age_t> test;
 ```
 
 The file `test.cpp` contains a second slightly larger example.

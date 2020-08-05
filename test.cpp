@@ -35,7 +35,7 @@ void test_impl(std::string name, int age, size_t bufsiz, int* nice) {
     }
 }
 
-const named_args::function<void(*)(std::string, int, size_t, int*), &test_impl, name_t, age_t, bufsiz_t, nice_t> test;
+const named_args::function<void(&)(std::string, int, size_t, int*), test_impl, name_t, age_t, bufsiz_t, nice_t> test;
 
 // tests
 void foo(char * s, int a, int b, int& n) {
