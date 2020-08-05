@@ -251,9 +251,9 @@ namespace named_args {
         // instantiation of error checks
         template <typename K, typename A>
         struct check_args {
-            USING(missing_req_args, detail::missing_req_args<K, A>);
-            USING(duplicate_args, detail::duplicate_args<K, A>);
-            USING(invalid_args, detail::invalid_args<K, A>);
+            USING(missing_req_args, TYPENAME_T(detail::missing_req_args<K, A>));
+            USING(duplicate_args, TYPENAME_T(detail::duplicate_args<K, A>));
+            USING(invalid_args, TYPENAME_T(detail::invalid_args<K, A>));
             const static bool valid =
                 detail::missing_req_args<K, A>::empty &&
                 detail::duplicate_args<K, A>::empty &&
