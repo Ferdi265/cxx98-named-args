@@ -45,6 +45,13 @@ namespace named_args {
         const static T value = _default;
     };
 
+    template <typename T>
+    struct manual_def_arg {
+        const static bool required = false;
+
+        USING(type, T);
+    };
+
     namespace detail {
         using tuple98::nil;
         using tuple98::cons;

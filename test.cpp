@@ -6,7 +6,9 @@
 struct name_t : named_args::req_arg {};
 struct age_t : named_args::def_arg<int, -1>  {};
 struct bufsiz_t : named_args::def_arg<size_t, 4096> {};
-struct nice_t : named_args::def_arg<int*> {};
+struct nice_t : named_args::manual_def_arg<int*> { static int* const value; };
+
+int* const nice_t::value = NULL;
 
 // create named argument markers
 const named_args::marker<name_t> name;
