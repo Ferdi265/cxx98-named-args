@@ -101,11 +101,11 @@ namespace tuple98 {
         template <typename T, typename R>
         struct get<cons<T, R>, T> {
             static T& get_value(cons<T, R>& t) {
-                return t.head;
+                return t.first;
             }
 
             static const T& get_value(const cons<T, R>& t) {
-                return t.head;
+                return t.first;
             }
         };
 
@@ -129,11 +129,11 @@ namespace tuple98 {
             USING(type, T);
 
             static T& nth_value(cons<T, R>& t) {
-                return t.head;
+                return t.first;
             }
 
             static const T& nth_value(const cons<T, R>& t) {
-                return t.head;
+                return t.first;
             }
         };
 
@@ -142,11 +142,11 @@ namespace tuple98 {
             USING(type, TYPENAME_T(nth<R, I - 1>));
 
             static type& nth_value(cons<U, R>& t) {
-                return nth<R, I - 1>::get_value(t.rest);
+                return nth<R, I - 1>::nth_value(t.rest);
             }
 
             static const type& nth_value(const cons<U, R>& t) {
-                return nth<R, I - 1>::get_value(t.rest);
+                return nth<R, I - 1>::nth_value(t.rest);
             }
         };
     }
