@@ -270,6 +270,7 @@ namespace named_args {
         };
     }
 
+    // named argument function type
     template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void>
     struct function;
 
