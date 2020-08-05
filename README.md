@@ -18,7 +18,8 @@ A proof of concept implementation of named function arguments for C++98.
 - Positional arguments are not (yet) supported. All arguments must be named.
 - Failed conversions (e.g. wrong argument type) will result in overload
   resolution error messages from inside the implementation.
-- Due to limitations in C++98 only up to 9 arguments can be used.
+- Due to limitations in C++98 only a limited number of arguments can be used
+  (currently implemented for up to 9 arguments)
 
 ## Required Standard Version
 
