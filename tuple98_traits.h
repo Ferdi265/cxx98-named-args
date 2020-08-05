@@ -2,7 +2,7 @@
 
 #include "tuple98.h"
 
-namespace tuple_traits {
+namespace tuple98_traits {
     using tuple98::nil;
     using tuple98::cons;
 
