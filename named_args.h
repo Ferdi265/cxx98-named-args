@@ -1,10 +1,11 @@
 #pragma once
 
 #include <cstddef>
+#include "type_traits.h"
 #include "tuple98.h"
 #include "tuple98_traits.h"
 
-#define STATIC_ASSERT(cond, msg) typedef int __static_assert_ ## __COUNTER__ [(cond) ? 0 : -1]
+#define STATIC_ASSERT(cond, msg) typedef TYPENAME_T(type_traits::conditional<(cond), int, void>) __static_assert_ ## __COUNTER__ [0]
 
 namespace named_args {
     // named argument value type
