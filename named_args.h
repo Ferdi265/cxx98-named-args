@@ -272,12 +272,14 @@ namespace named_args {
     }
 
     // named argument function type
-    template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void>
+    template <typename I, I impl, typename K1 = void, typename K2 = void, typename K3 = void, typename K4 = void, typename K5 = void, typename K6 = void, typename K7 = void, typename K8 = void, typename K9 = void, typename K10 = void,
+        bool all_defaultable = detail::missing_req_args<TEMPLATE_TUPLE(K1, K2, K3, K4, K5, K6, K7, K8, K9, K10), TUPLE()>::empty
+    >
     struct function;
 
     template <typename I, I impl>
-    struct function<I, impl> {
-    private:
+    struct function<I, impl, void, void, void, void, void, void, void, void, void, void, false> {
+    protected:
         USING(kinds_t, TUPLE());
 
         template <typename args_t>
@@ -290,17 +292,26 @@ namespace named_args {
             rest_values_t rest = tuple98_traits::values<rest_kinds_t>::value();
             return impl();
         }
+    };
+
+    template <typename I, I impl>
+    struct function<I, impl, void, void, void, void, void, void, void, void, void, void, true>
+        : public function<I, impl, void, void, void, void, void, void, void, void, void, void, false>
+    {
+    private:
+        USING(super, function<I, impl, void, void, void, void, void, void, void, void, void, void, false>);
+        USING(kinds_t, TUPLE());
 
     public:
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return apply_impl(tuple98::make_tuple());
+            return super::apply_impl(tuple98::make_tuple());
         }
     };
 
     template <typename I, I impl, typename K1>
-    struct function<I, impl, K1> {
-    private:
+    struct function<I, impl, K1, void, void, void, void, void, void, void, void, void, false> {
+    protected:
         USING(kinds_t, TEMPLATE_TUPLE(K1));
 
         template <typename args_t>
@@ -315,11 +326,6 @@ namespace named_args {
         }
 
     public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return apply_impl(tuple98::make_tuple());
-        }
-
         template <typename A1>
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
@@ -327,9 +333,24 @@ namespace named_args {
         }
     };
 
-    template <typename I, I impl, typename K1, typename K2>
-    struct function<I, impl, K1, K2> {
+    template <typename I, I impl, typename K1>
+    struct function<I, impl, K1, void, void, void, void, void, void, void, void, void, true>
+        : public function<I, impl, K1, void, void, void, void, void, void, void, void, void, false>
+    {
     private:
+        USING(super, function<I, impl, K1, void, void, void, void, void, void, void, void, void, false>);
+        USING(kinds_t, TEMPLATE_TUPLE(K1));
+
+    public:
+        __attribute__((always_inline))
+        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+            return super::apply_impl(tuple98::make_tuple());
+        }
+    };
+
+    template <typename I, I impl, typename K1, typename K2>
+    struct function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false> {
+    protected:
         USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
 
         template <typename args_t>
@@ -345,11 +366,6 @@ namespace named_args {
         }
 
     public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return apply_impl(tuple98::make_tuple());
-        }
-
         template <typename A1>
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
@@ -363,9 +379,24 @@ namespace named_args {
         }
     };
 
-    template <typename I, I impl, typename K1, typename K2, typename K3>
-    struct function<I, impl, K1, K2, K3> {
+    template <typename I, I impl, typename K1, typename K2>
+    struct function<I, impl, K1, K2, void, void, void, void, void, void, void, void, true>
+        : public function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false>
+    {
     private:
+        USING(super, function<I, impl, K1, K2, void, void, void, void, void, void, void, void, false>);
+        USING(kinds_t, TEMPLATE_TUPLE(K1, K2));
+
+    public:
+        __attribute__((always_inline))
+        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+            return super::apply_impl(tuple98::make_tuple());
+        }
+    };
+
+    template <typename I, I impl, typename K1, typename K2, typename K3>
+    struct function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false> {
+    protected:
         USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
 
         template <typename args_t>
@@ -382,11 +413,6 @@ namespace named_args {
         }
 
     public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return apply_impl(tuple98::make_tuple());
-        }
-
         template <typename A1>
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
@@ -406,9 +432,24 @@ namespace named_args {
         }
     };
 
-    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
-    struct function<I, impl, K1, K2, K3, K4> {
+    template <typename I, I impl, typename K1, typename K2, typename K3>
+    struct function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, true>
+        : public function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false>
+    {
     private:
+        USING(super, function<I, impl, K1, K2, K3, void, void, void, void, void, void, void, false>);
+        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3));
+
+    public:
+        __attribute__((always_inline))
+        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+            return super::apply_impl(tuple98::make_tuple());
+        }
+    };
+
+    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
+    struct function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false> {
+    protected:
         USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
 
         template <typename args_t>
@@ -426,11 +467,6 @@ namespace named_args {
         }
 
     public:
-        __attribute__((always_inline))
-        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
-            return apply_impl(tuple98::make_tuple());
-        }
-
         template <typename A1>
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1)>) operator()(A1 a1) const {
@@ -453,6 +489,21 @@ namespace named_args {
         __attribute__((always_inline))
         TYPENAME_T(detail::impl_return_check<I, kinds_t, TEMPLATE_TUPLE(A1, A2, A3, A4)>) operator()(A1 a1, A2 a2, A3 a3, A4 a4) const {
             return apply_impl(tuple98::make_tuple(a1, a2, a3, a4));
+        }
+    };
+
+    template <typename I, I impl, typename K1, typename K2, typename K3, typename K4>
+    struct function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, true>
+        : public function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false>
+    {
+    private:
+        USING(super, function<I, impl, K1, K2, K3, K4, void, void, void, void, void, void, false>);
+        USING(kinds_t, TEMPLATE_TUPLE(K1, K2, K3, K4));
+
+    public:
+        __attribute__((always_inline))
+        TYPENAME_T(detail::impl_return_check<I, kinds_t, TUPLE()>) operator()() const {
+            return super::apply_impl(tuple98::make_tuple());
         }
     };
 }
