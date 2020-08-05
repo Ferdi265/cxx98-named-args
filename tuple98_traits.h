@@ -119,7 +119,7 @@ namespace tuple98_traits {
         USING(type, TYPENAME_T(map_type<cons<T, R>, M>));
 
         static type value() {
-            return tuple98::make_tuple(M<T>::value, map_value<R, M>::value());
+            return type(M<T>::value, map_value<R, M>::value());
         }
     };
 
@@ -141,7 +141,7 @@ namespace tuple98_traits {
         USING(type, TYPENAME_T(map_type<cons<T, R>, M>));
 
         static type value() {
-            return tuple98::make_tuple(M<T>::value(), map_value<R, M>::value());
+            return type(M<T>::value(), map_value_fn<R, M>::value());
         }
     };
 
@@ -179,7 +179,7 @@ namespace tuple98_traits {
     template <typename T>
     struct values {
         static TYPENAME_T(map_type<T, type_of>) value() {
-            return map_value<T, value_of>::value();
+            return map_value_fn<T, value_of>::value();
         }
     };
 
@@ -187,7 +187,7 @@ namespace tuple98_traits {
     template <typename T>
     struct value_fns {
         static TYPENAME_T(map_type<T, type_of>) value() {
-            return map_value<T, value_fn_of>::value();
+            return map_value_fn<T, value_fn_of>::value();
         }
     };
 }
