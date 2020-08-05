@@ -153,14 +153,18 @@ namespace tuple98_traits {
 
     template <typename T>
     struct value_of {
-        static TYPENAME_T(T) value() {
+        USING(type, TYPENAME_T(T));
+
+        static type value() {
             return T::value;
         }
     };
 
     template <typename T>
     struct value_fn_of {
-        static TYPENAME_T(T) value() {
+        USING(type, TYPENAME_T(T));
+
+        static type value() {
             return T::value();
         }
     };
