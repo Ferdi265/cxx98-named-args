@@ -11,6 +11,11 @@ namespace tuple98_traits {
     template <typename T, typename U>
     struct prepend;
 
+    template <typename U>
+    struct prepend<nil, U> {
+        USING(type, cons<U, nil>);
+    };
+
     template <typename T, typename R, typename U>
     struct prepend<cons<T, R>, U> {
         USING(type, cons<U, cons<T, R> >);
